@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Chat</title>
+  </head>
+  <body>
+    <main>
+      <div class="chats" id="chats"></div>
+      <form id="chatform">
+        <input id="sender" type="text" placeholder="Enter the message" />
+        <button id="send" type="submit">Send</button>
+      </form>
+
+      <audio id="chat-sound" src="chat.mp3" />
+    </main>
+  </body>
+</html>
+
+<script>
+  let chats$ = document.getElementById("chats");
+  let sender$ = document.getElementById("sender");
+  const send$ = document.getElementById("send");
+  const form$ = document.getElementById("chatform");
+
+  form$.addEventListener("submit", function (e) {
+    e.preventDefault();
+    if (sender$.value === "") {
+      alert("Enter your message");
+    } else {
+      const span$ = document.createElement("span");
+      chats$.prepend(span$);
+      span$.innerText = sender$.value;
+
+      const audioSound$ = document.getElementById("chat-sound");
+      audioSound$.pause();
+      audioSound$.currentTime = 0;
+      audioSound$.play();
+
+      sender$.value = "";
+    }
+  });
+</script>
