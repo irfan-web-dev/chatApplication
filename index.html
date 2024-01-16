@@ -25,11 +25,12 @@
   const send$ = document.getElementById("send");
   const form$ = document.getElementById("chatform");
 
-  const savedMessages = JSON.parse(localStorage.getItem("chatMessages")) || [];
+  const savedMessages = JSON.parse(localStorage.getItem("chat")) || [];
   savedMessages.forEach((message) => appendMessage(message));
 
   form$.addEventListener("submit", function (e) {
     e.preventDefault();
+
     if (sender$.value === "") {
       alert("Enter your message");
     } else {
