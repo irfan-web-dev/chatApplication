@@ -25,14 +25,20 @@
   const send$ = document.getElementById("send");
   const form$ = document.getElementById("chatform");
 
+  const savedMessages = JSON.parse(localStorage.getItem("chatMessages")) || [];
+  savedMessages.forEach((message) => appendMessage(message));
+
   form$.addEventListener("submit", function (e) {
     e.preventDefault();
     if (sender$.value === "") {
       alert("Enter your message");
     } else {
-      const span$ = document.createElement("span");
-      chats$.prepend(span$);
-      span$.innerText = sender$.value;
+      const message = sender$.value;
+      appendMessage(message);
+
+      // Save the message to local storage
+      savedMessages.push(message);
+      localStorage.setItem("chat", JSON.stringify(savedMessages));
 
       const audioSound$ = document.getElementById("chat-sound");
       audioSound$.pause();
@@ -42,4 +48,28 @@
       sender$.value = "";
     }
   });
+
+  function appendMessage(message) {
+    const span$ = document.createElement("span");
+    chats$.prepend(span$);
+    span$.innerText = message;
+  }
+
+  // form$.addEventListener("submit", function (e) {
+  //   e.preventDefault();
+  //   if (sender$.value === "") {
+  //     alert("Enter your message");
+  //   } else {
+  //     const span$ = document.createElement("span");
+  //     chats$.prepend(span$);
+  //     span$.innerText = sender$.value;
+
+  //     const audioSound$ = document.getElementById("chat-sound");
+  //     audioSound$.pause();
+  //     audioSound$.currentTime = 0;
+  //     audioSound$.play();
+
+  //     sender$.value = "";
+  //   }
+  // });
 </script>
